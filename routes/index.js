@@ -25,11 +25,22 @@ module.exports = {
                     res.redirect('/');
                 })
             }
-
+            
         });
     },
     addTeacherPage: (req, res)=>{
-        res.json('student page');
+        const query = "select * from class";
+        const classes = [];
+        db.query(query, (err, result)=>{
+            console.log(result);
+            if(!err){
+                classes = result;
+            }else {
+                res.status(500).send(err);
+            }
+
+        });
+        res.render('add-teacher.ejs', {classes});
         
     },
     addTeacher: (req, res)=>{
@@ -37,11 +48,39 @@ module.exports = {
         
     },
     addClassPage:  (req, res)=>{
-        res.json('student page');
+        res.render('add-class.ejs', {message: ''});
         
     },
     addClass: (req, res)=>{
-        res.json('student page');
-        
+        const name = req.body.name;
+        console.log(req.body);
+        let className = "select * from class where name='" + name + "'";
+        console.log(className);
+        db.query(className, (err, result) => {
+            if (err) {
+                return res.status(500).send(err);
+            }
+            if (result.length) {
+                message = 'Class already exists';
+                res.render('add-class.ejs', {
+                    message
+                });
+            } else {
+                let query = `insert into class(name) values('${name}')`;
+                db.query(query, (err, result) => {
+                    if (err) {
+                        return res.status(500).send(err);
+                    }
+                    res.redirect('/');
+                })
+            }
+
+        });
     },
+    addNewsPage: (req, res)=>{
+        res.render('add-news.ejs');
+    },
+    addNews: (req, res)=>{
+        res.json("bla");
+    }
 }

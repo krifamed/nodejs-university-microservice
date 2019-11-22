@@ -1,0 +1,18 @@
+version: '3'
+services:
+  nodejs:
+    image: nodejs-app
+    build: ./
+    ports:
+     - "8081:3000"
+    env_file:
+    - ./.env
+    depends_on:
+     - db
+    links:
+     - db:db  
+    environment:
+      - DATABASE_HOST=db
+  db:
+    build: ./db
+   
