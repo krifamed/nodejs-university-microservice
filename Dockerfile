@@ -1,10 +1,25 @@
-FROM node:latest
-WORKDIR /usr/bin/app
-ENV PORT=3000
-COPY . .
+# FROM node:latest
+# WORKDIR /usr/bin/app
+# ENV PORT=3000
+# COPY . .
+# RUN npm install
+# EXPOSE $PORT
+# CMD ["npm", "start"]
+
+FROM node:10-alpine
+
+RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
+
+WORKDIR /home/node/app
+
+COPY package*.json ./
+
+USER node
+
 RUN npm install
-## THE LIFE SAVER
-# ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.2.1/wait /wait
-# RUN chmod +x /wait
-EXPOSE $PORT
-CMD ["npm", "start"]
+
+COPY --chown=node:node . .
+
+EXPOSE 3000
+
+CMD [ "node", "app.js" ]

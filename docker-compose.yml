@@ -1,18 +1,65 @@
+# version: '3'
+# services:
+#   nodejs:
+#     image: nodejs-app
+#     build: ./
+#     ports:
+#      - "8080:3000"
+#     environment:
+#       - DATABASE_HOST=db
+#       - MYSQL_ROOT_PASSWORD=123
+#     env_file:
+#     - ./.env
+#     depends_on:
+#      - db
+#   db:
+#     image: mydb-app
+#     build: ./db
+#     environment:
+#       - DATABASE_HOST=db
+#       - MYSQL_ROOT_PASSWORD=123
+#     ports:
+#       - '3306:3306'
 version: '3'
+
 services:
   nodejs:
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: nodejs-app
-    build: ./
-    ports:
-     - "8081:3000"
-    env_file:
-    - ./.env
-    depends_on:
-     - db
-    links:
-     - db:db  
+    container_name: nodejs-app
+    restart: unless-stopped
+    env_file: .env
     environment:
       - DATABASE_HOST=db
+      - MYSQL_ROOT_PASSWORD=123
+    depends_on:
+     - db
+
+    ports:
+      - "8080:3000"
+    volumes:
+      - .:/home/node/app
+      - node_modules:/home/node/app/node_modules
+    networks:
+      - app-network
+    command: ./wait-for.sh db:3306 -- /home/node/app/node_modules/.bin/nodemon app.js 
+
   db:
-    build: ./db
-   
+    image: mydb-app
+    container_name: db
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - DATABASE_HOST=db
+      - MYSQL_ROOT_PASSWORD=123
+    networks:
+      - app-network  
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  node_modules:

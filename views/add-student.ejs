@@ -1,11 +1,29 @@
+<% include partials/header.ejs %>
+<div class="container">
 <form class="add-player-form" action="" method="post" >
     <div class="form-row">
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-6">
             <input type="text" class="form-control" name="name" id="name" placeholder="Student Name" required>
         </div>
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-6">
             <input type="phone" class="form-control" name="phone" id="phone" placeholder="Phone Number" required>
         </div>
+        <div class="form-group col-md-6">
+            <select name="class_id" class="form-control" required>
+                <option selected disabled>Choose Class</option>
+                <% classes.forEach(function(item){ %>
+                <option value="<%= item.id %>"><%= item.name %></option>
+                <% }); %>
+        
+            </select>
+        </div>
+
     </div>
+
     <button type="submit" class="btn btn-primary float-right">Add Studnent</button>
 </form>
+</div>
+</div>
+</body>
+
+</html>

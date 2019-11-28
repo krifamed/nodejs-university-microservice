@@ -1,3 +1,4 @@
+<% include partials/header.ejs %>
 <div class="container">
     <% if (message != '') { %>
     <p class="text-center text-danger"><%= message %></p>
@@ -8,6 +9,12 @@
                 <input type="text" class="form-control" name="name" id="name" placeholder="Class Name"
                     required>
             </div>
+
         </div>
         <button type="submit" class="btn btn-primary float-right">Add Class</button>
     </form>
+    </div>
+</div>
+</body>
+    
+</html>

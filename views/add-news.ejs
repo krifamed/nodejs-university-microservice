@@ -1,0 +1,29 @@
+<% include partials/header.ejs %>
+<div class="container">
+    <% if (message != '') { %>
+    <p class="text-center text-danger"><%= message %></p>
+    <% } %>
+    <form class="add-player-form" action="" method="post">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <select name="teacher" class="form-control" required>
+                    <option selected disabled>Choose Teacher</option>
+                    <% teachers.forEach(function(item){ %>
+                        <option value="<%= item.id %>"><%= item.name %></option>
+                        <% }); %>
+                        
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <textarea class="form-control" name="message" id="name" placeholder="message" required>
+
+                    </textarea>
+                </div>
+        </div>
+        <button type="submit" class="btn btn-primary float-right">Add Teacher</button>
+    </form>
+    </div>
+    </div>
+    </body>
+    
+    </html>
