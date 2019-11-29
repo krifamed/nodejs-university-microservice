@@ -1,0 +1,31 @@
+# FROM node:latest
+# WORKDIR /usr/bin/app
+# ENV PORT=3000
+# COPY . .
+# RUN npm install
+# EXPOSE $PORT
+# CMD ["npm", "start"]
+
+
+# version: '3'
+# services:
+#   nodejs:
+#     image: nodejs-app
+#     build: ./
+#     ports:
+#      - "8080:3000"
+#     environment:
+#       - DATABASE_HOST=db
+#       - MYSQL_ROOT_PASSWORD=123
+#     env_file:
+#     - ./.env
+#     depends_on:
+#      - db
+#   db:
+#     image: mydb-app
+#     build: ./db
+#     environment:
+#       - DATABASE_HOST=db
+#       - MYSQL_ROOT_PASSWORD=123
+#     ports:
+#       - '3306:3306'

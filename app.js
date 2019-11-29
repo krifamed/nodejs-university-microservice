@@ -19,7 +19,10 @@ app.set('view engine', 'ejs'); // configure template engine
 
 // routes
 
+app.get('/', (req, res)=>{
+    res.render('index.ejs', { message: ' welcome'});
 
+})
 app.get('/add-student', addStudentPage);
 app.post('/add-student', addStudent);
 app.get('/add-teacher', addTeacherPage);
